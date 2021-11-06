@@ -10,11 +10,25 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+             AddCarTest();
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine(car.CarName+"/"+car.BrandName+"/"+car.ColorName+"/"+car.DailyPrice);
+            }
+
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            Console.WriteLine(brandManager.GetAll());
+        }
+
+        private static void AddCarTest()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
             carManager.Add(new Car
             {
-                BrandId=1,
-                ColorId=2,
+                CarName="Opel",
+                BrandId = 1,
+                ColorId = 2,
                 ModelYear = 1996,
                 DailyPrice = 10,
                 Description = "Beyaz Opel Corsa"
@@ -27,7 +41,6 @@ namespace ConsoleUI
             {
                 Console.WriteLine(car.Description);
             }
-
         }
     }
 }

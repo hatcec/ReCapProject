@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,33 +19,38 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             if (car.Description.Length > 2 && car.DailyPrice > 0)
             {
                 _carDal.Add(car);
-                Console.WriteLine("Kayıt Edilmiştir");
+                return new SuccessResult(Messages.Added);
             }
             else
             {
-                Console.WriteLine("Araç ismi veya günlük kiralama fiyatı hatalıdır.");
+                return new ErrorResult(Messages.Error);
             }
         }
 
-        public List<Car> GetAll()
+        public IDataResult< List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll());
 
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult< List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetAll(p => p.BrandId == id);
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult< List<Car>> GetCarsByBrandId(int id)
         {
-            return _carDal.GetAll(p => p.ColorId == id);
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll(p => p.BrandId == id));
+        }
+
+        public IDataResult< List<Car>> GetCarsByColorId(int id)
+        {
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll(p => p.ColorId == id));
         }
     }
 }
