@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,6 +21,7 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
             //using (CarContext context=new CarContext())
@@ -36,7 +38,7 @@ namespace Business.Concrete
             //    }
             // }
 
-            ValidationTool.Validate(new RentalValidator(), rental);
+           
             _rentalDal.Add(rental);
             return new SuccessResult("Araç başarıyla kiralanmıştır.");
 
