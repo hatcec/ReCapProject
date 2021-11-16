@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
             var result = _rentalServrice.GetCarsById(id);
             if (result.Success)
             {
-                return Ok(result);//result.data da denilebilir.
+                return Ok(result);
             }
             return BadRequest(result);
         }
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
             var result = _rentalServrice.GetUserById(id);
             if (result.Success)
             {
-                return Ok(result);//result.data da denilebilir.
+                return Ok(result);
             }
             return BadRequest(result);
         }

@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
             var result = _brandService.GetByBrandId(id);
             if (result.Success)
             {
-                return Ok(result);//result.data da denilebilir.
+                return Ok(result);
             }
             return BadRequest(result);
         }

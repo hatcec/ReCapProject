@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -33,29 +35,13 @@ namespace Business.Concrete
             //        return new ErrorResult(Messages.Date);
             //    }
             // }
-            List<Rental> rentalListByCarId = _rentalDal.GetAll(x => x.CarId == rental.CarId);
-            var lastRentalOfCar = rentalListByCarId[(rentalListByCarId.Count) - 1];
-            var lastReturnDate = lastRentalOfCar.ReturnDate;
+
+            ValidationTool.Validate(new RentalValidator(), rental);
+            _rentalDal.Add(rental);
+            return new SuccessResult("Araç başarıyla kiralanmıştır.");
 
 
 
-            if (lastReturnDate == null)
-            {
-                return new ErrorResult("Araç süresiz kiralanmıştır. Dönüş tarihi belli değildir");
-            }
-            else
-            {
-                int result = DateTime.Compare(lastReturnDate , rental.RentDate);
-
-                if (result < 0)
-                {
-                    _rentalDal.Add(rental);
-                    return new SuccessResult("Araç başarıyla kiralanmıştır.");
-                }
-
-                return new ErrorResult("Kiralamaya başlama tarihinizde aracımız maalesef doludur !!! ");
-
-            }
         }
 
         public IResult Delete(Rental rental)
