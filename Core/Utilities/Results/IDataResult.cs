@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Core.Utilities.Results
 {
-    public interface IDataResult<T> : IResult//mesaj ve işlem sonucu içerdiği için IResult impelent ettik
+    public interface IDataResult<T>:IResult
     {
         T Data { get; }
     }
