@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -31,7 +32,7 @@ namespace ConsoleUI
                 FirstName = "Hatice",
                 LastName = "Ateş",
                 Email = "htcn@gmail.com",
-                Password = "1234"
+                //PasswordSalt = 1234
             });
         }
         private static void AddRentalCar()
